@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event);
+    void spawnRobot();
     ~MainWindow();
 
 private:

@@ -1,4 +1,7 @@
+#include <QDebug>  // use this instead of std::cout
 #include <QPainter>
+#include <QPushButton>
+#include <QString>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -12,6 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle(ICP_TITLE);
     resize(ICP_WIDTH, ICP_HEIGHT);
+
+    /* SPAWN button */
+    QPushButton *button = new QPushButton("spawn", this);
+    button->setGeometry(20, 20, 60, 30);  // x, y, width, height
+    connect(button, &QPushButton::clicked, this, &MainWindow::spawnRobot);
 }
 
 MainWindow::~MainWindow()
@@ -35,3 +43,6 @@ void MainWindow::paintEvent(QPaintEvent *event)
     }
 }
 
+void MainWindow::spawnRobot() {
+    qDebug() << "robot spawned";
+}
