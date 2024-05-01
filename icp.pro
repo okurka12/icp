@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    icp24.h \
     mainwindow.h
 
 FORMS += \
