@@ -68,7 +68,10 @@ void MainWindow::updateAllRobots() {
 }
 
 void MainWindow::spawnRobot() {
-    robots.push_back(Robot(ICP_INIT_X, ICP_INIT_Y, ICP_INIT_ANGLE));
+
+    Robot r = Robot(ICP_INIT_X, ICP_INIT_Y, ICP_INIT_ANGLE);
+    if (r.collidesWithAnyone(robots)) return;  // don't spawn
+    robots.push_back(r);
     qDebug() << "robot spawned";
 }
 
