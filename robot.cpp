@@ -50,6 +50,7 @@ void Robot::update(std::vector<Robot> &others) {
     } else {
 
         /* on each collision, start rotating to a random angle (CW/CCW) */
+        /* note: maybe not as efficient to call this so often? (todo) */
         updateRotDir();
     }
 }
