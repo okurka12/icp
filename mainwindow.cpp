@@ -22,26 +22,56 @@ MainWindow::MainWindow(QWidget *parent)
     std::vector<Robot> robots = {};
     std::vector<Obstacle> obstacles = {};
     leftButtonPressed = false;
+    paused = false;
 
 
     setWindowTitle(ICP_TITLE);
     resize(ICP_WIDTH, ICP_HEIGHT);
 
     /* QTimer for tick simulation */
-    QTimer *timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::tickUpdate);
     timer->start(1000 / ICP_TPS);
 
     /* SPAWN button */
-    QPushButton *button = new QPushButton("spawn (s)", this);
-    button->setGeometry(20, 20, 80, 35);  // x, y, width, height
-    connect(button, &QPushButton::clicked, this, &MainWindow::spawnRobot);
+    QPushButton *spawn_button = new QPushButton("spawn (s)", this);
+    spawn_button->setGeometry(20, 20, 80, 35);  // x, y, width, height
+    connect(spawn_button, &QPushButton::clicked, this,
+        &MainWindow::spawnRobot);
+
+    /* PAUSE button */
+    QPushButton *pause_button = new QPushButton("pause (p)", this);
+    pause_button->setGeometry(100, 20, 80, 35);  // x, y, width, height
+    connect(pause_button, &QPushButton::clicked, this,
+        &MainWindow::toggleSimulation);
 }
+
+void MainWindow::toggleSimulation() {
+    if (paused) {
+        timer->start(1000 / ICP_TPS);
+        paused = false;
+    } else {
+        timer->stop();
+        paused = true;
+    }
+}
+
+
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_S) {
         qDebug() << "S key pressed!";
         spawnRobot();
+    } else if (event->key() == Qt::Key_P) {
+        qDebug() << "P key pressed!";
+        toggleSimulation();
+    } else if (event->key() == Qt::Key_Escape) {
+        qDebug() << "ESC key pressed!";
+        toggleSimulation();
+    } else if (event->key() == Qt::Key_W && event->modifiers() & Qt::CTRL) {
+        qDebug() << "CTRL + W pressed!";
+        close();
+
     } else {
         /* Call base class implementation for other keys */
         QMainWindow::keyPressEvent(event);

@@ -29,6 +29,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QTimer *timer;
     std::vector<Robot> robots;
     std::vector<Obstacle> obstacles;
     void drawRobot(Robot &rob);
@@ -37,6 +38,8 @@ private:
     void drawAllRobots();
     void updateAllRobots();
     void drawAllObstacles();
+    void toggleSimulation();
     bool leftButtonPressed;
+    bool paused;
 };
 #endif // MAINWINDOW_H
