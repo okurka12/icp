@@ -9,7 +9,7 @@ Robot::Robot(unsigned int initial_x, unsigned int initial_y, unsigned int initia
 {}
 
 
-void Robot::update() {
+void Robot::update(std::vector<Robot> &others) {
 
     double oldx = x;
     double oldy = y;
@@ -27,16 +27,26 @@ void Robot::update() {
     x = newx;
     y = newy;
     /* todo: check collision */
-    if (collidesWithWindow()) {
+    if (collidesWithWindow() || collidesWithAnyone(others)) {
         x = oldx;
         y = oldy;
         r += (double)ICP_ROBROT / ICP_TPS;
     }
 }
 
+bool Robot::collidesWithAnyone(std::vector<Robot> &others) {
+    for (Robot &other : others) {
+        bool are_same = (void *)this == (void *)(&other);
+        if (!are_same && collidesWith(other)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Robot::collidesWith(Robot &other) {
     double xd = std::max(x, other.x) - std::min(x, other.x);
-    double yd = std::max(x, other.y) - std::min(x, other.y);
+    double yd = std::max(y, other.y) - std::min(y, other.y);
     double distance = sqrt(xd * xd + yd * yd);
     return distance < 2 * ICP_ROBSIZE + ICP_MARGIN;
 }

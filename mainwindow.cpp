@@ -63,7 +63,7 @@ void MainWindow::drawAllRobots() {
 
 void MainWindow::updateAllRobots() {
     for (Robot &rob : robots) {
-        rob.update();
+        rob.update(robots);
     }
 }
 
