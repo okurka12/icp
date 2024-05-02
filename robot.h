@@ -12,7 +12,7 @@ public:
     /* one-tick update of a position */
     void update();
     bool collidesWith(Robot &other);
-    bool collidesWithWall();
+    bool collidesWithWindow();
 };
 
 #endif // ROBOT_H

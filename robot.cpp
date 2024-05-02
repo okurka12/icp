@@ -27,7 +27,7 @@ void Robot::update() {
     x = newx;
     y = newy;
     /* todo: check collision */
-    if (collidesWithWall()) {
+    if (collidesWithWindow()) {
         x = oldx;
         y = oldy;
         r += (double)ICP_ROBROT / ICP_TPS;
@@ -41,7 +41,7 @@ bool Robot::collidesWith(Robot &other) {
     return distance < 2 * ICP_ROBSIZE + ICP_MARGIN;
 }
 
-bool Robot::collidesWithWall() {
+bool Robot::collidesWithWindow() {
     if (x < ICP_ROBSIZE + ICP_MARGIN || y < ICP_ROBSIZE + ICP_MARGIN) {
         return true;
     }
