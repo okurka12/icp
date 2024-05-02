@@ -20,6 +20,9 @@
 /* speed of a robot in pixels/s */
 #define ICP_ROBSPEED 200
 
+/* speed of a robot rotation if collision is detected, degrees per second */
+#define ICP_ROBROT 90
+
 /* initial angle in degrees for a newly spawned robot */
 #define ICP_INIT_ANGLE 325
 
@@ -32,7 +35,10 @@
 /* pi */
 #define ICP_PI 3.14159265359
 
+/* margin of collision detection, px */
+#define ICP_MARGIN 2
+
 /* macro to convert degrees to radians (double) */
 #define ICPdeg2rad(rrrad) (((double)(rrrad) / 180.0) * ICP_PI)
 
-#endif // ICP24_H
+#endif // ifndef ICP24_H
