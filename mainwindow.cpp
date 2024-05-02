@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QPushButton>
 #include <QString>
+#include <QTimer>
+#include <vector>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -13,8 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    std::vector<Robot> robots = {};
+
     setWindowTitle(ICP_TITLE);
     resize(ICP_WIDTH, ICP_HEIGHT);
+
+    /* QTimer for tick simulation */
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::tickUpdate);
+    timer->start(1000 / ICP_TPS);
 
     /* SPAWN button */
     QPushButton *button = new QPushButton("spawn", this);
@@ -27,22 +36,45 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void MainWindow::paintEvent(QPaintEvent *event) {
+    // QMainWindow::paintEvent(event);
+    drawGrid(event);
+    drawAllRobots();
+}
+
+void MainWindow::drawGrid(QPaintEvent *event)
 {
-    QMainWindow::paintEvent(event);
-
     QPainter painter(this);
-    int cellWidth = width() / 13;
-    int cellHeight = height() / 7;
-
-    // Draw grid
-    for (int i = 0; i < 13; ++i) {
-        for (int j = 0; j < 7; ++j) {
-            painter.drawRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+    for (int i = 0; i < width(); i += ICP_OBSIZE) {
+        for (int j = 0; j < height(); j += ICP_OBSIZE) {
+            painter.drawRect(i, j, ICP_OBSIZE, ICP_OBSIZE);
         }
+    }
+
+}
+
+void MainWindow::drawAllRobots() {
+    for (Robot &rob : robots) {
+        this->drawRobot(rob);
     }
 }
 
 void MainWindow::spawnRobot() {
     qDebug() << "robot spawned";
+    int init_x = 100;
+    int init_y = 100;
+    int init_angle = 270;
+    robots.push_back(Robot(init_x, init_y, init_angle));
+}
+
+void MainWindow::tickUpdate() {
+    // qDebug() << "tick";
+
+    update();
+
+}
+
+void MainWindow::drawRobot(Robot &rob) {
+    QPainter painter(this);
+    painter.drawEllipse(rob.x - ICP_ROBSIZE, rob.y - ICP_ROBSIZE, 2 * ICP_ROBSIZE, 2 * ICP_ROBSIZE);
 }

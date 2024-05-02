@@ -10,11 +10,13 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    robot.cpp
 
 HEADERS += \
     icp24.h \
-    mainwindow.h
+    mainwindow.h \
+    robot.h
 
 FORMS += \
     mainwindow.ui
