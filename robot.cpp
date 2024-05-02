@@ -1,12 +1,28 @@
 #include <cmath>  // sin, cos, sqrt
 #include <iostream>
 #include <algorithm>  // min, max
+#include <random>
 #include "robot.h"
 #include "icp24.h"
 
-Robot::Robot(unsigned int initial_x, unsigned int initial_y, unsigned int initial_r)
+static int getRandomNumber(int min, int max) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
+    return dis(gen);
+}
+
+Robot::Robot(double initial_x, double initial_y, double initial_r)
     : x(initial_x), y(initial_y), r(initial_r)
-{}
+{
+    updateRotDir();
+}
+
+void Robot::updateRotDir() {
+
+    /* every fourth time, the robot decides to rotate to the other side */
+    rotdir = getRandomNumber(1, 4) == 1 ? 1 : -1;
+}
 
 
 void Robot::update(std::vector<Robot> &others) {
@@ -30,7 +46,11 @@ void Robot::update(std::vector<Robot> &others) {
     if (collidesWithWindow() || collidesWithAnyone(others)) {
         x = oldx;
         y = oldy;
-        r += (double)ICP_ROBROT / ICP_TPS;
+        r += rotdir * (double)ICP_ROBROT / ICP_TPS;
+    } else {
+
+        /* on each collision, start rotating to a random angle (CW/CCW) */
+        updateRotDir();
     }
 }
 
