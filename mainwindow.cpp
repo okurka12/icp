@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QString>
 #include <QTimer>
+#include <QtWidgets>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -18,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     std::vector<Robot> robots = {};
+    std::vector<Obstacle> obstacles = {};
+    leftButtonPressed = false;
+
 
     setWindowTitle(ICP_TITLE);
     resize(ICP_WIDTH, ICP_HEIGHT);
@@ -33,6 +37,57 @@ MainWindow::MainWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, &MainWindow::spawnRobot);
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+
+    if (event->button() == Qt::LeftButton) {
+        QPoint clickPos = event->pos();
+
+        qDebug() << "Clicked at" << clickPos;
+        leftButtonPressed = true;
+        obstacles.push_back(Obstacle(clickPos.x() / ICP_OBSIZE, clickPos.y() / ICP_OBSIZE));
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (leftButtonPressed) {
+        unsigned int posx = event->pos().x() / ICP_OBSIZE;
+        unsigned int posy = event->pos().y() / ICP_OBSIZE;
+        bool obstacle_already_present = false;
+        for (Obstacle &obs : obstacles) {
+            if (obs.x == posx && obs.y == posy) {
+                obstacle_already_present = true;
+            }
+        }
+        if (!obstacle_already_present) {
+            obstacles.push_back(Obstacle(posx, posy));
+        }
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        leftButtonPressed = false;
+    }
+}
+
+void MainWindow::drawAllObstacles() {
+    for (Obstacle &obs : obstacles) {
+        drawObstacle(obs.x, obs.y);
+    }
+}
+
+void MainWindow::drawObstacle(unsigned int x, unsigned int y) {
+    QPainter painter(this);
+    painter.setBrush(Qt::red);
+    painter.setPen(QPen(Qt::black, 1));
+    painter.drawRect(
+        x * ICP_OBSIZE,
+        y * ICP_OBSIZE,
+        ICP_OBSIZE,
+        ICP_OBSIZE
+    );
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -42,6 +97,7 @@ void MainWindow::paintEvent(QPaintEvent *event) {
     // QMainWindow::paintEvent(event);
     drawGrid(event);
     drawAllRobots();
+    drawAllObstacles();
 }
 
 void MainWindow::drawGrid(QPaintEvent *event)

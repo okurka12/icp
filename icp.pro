@@ -3,6 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+CONFIG += exceptions
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -11,11 +12,13 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    obstacle.cpp \
     robot.cpp
 
 HEADERS += \
     icp24.h \
     mainwindow.h \
+    obstacle.h \
     robot.h
 
 FORMS += \
