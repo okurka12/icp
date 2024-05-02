@@ -27,5 +27,6 @@ private:
     void drawRobot(Robot &rob);
     void drawGrid(QPaintEvent *event);
     void drawAllRobots();
+    void updateAllRobots();
 };
 #endif // MAINWINDOW_H

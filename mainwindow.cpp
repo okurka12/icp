@@ -59,22 +59,36 @@ void MainWindow::drawAllRobots() {
     }
 }
 
+void MainWindow::updateAllRobots() {
+    for (Robot &rob : robots) {
+        rob.update();
+    }
+}
+
 void MainWindow::spawnRobot() {
+    robots.push_back(Robot(ICP_INIT_X, ICP_INIT_Y, ICP_INIT_ANGLE));
     qDebug() << "robot spawned";
-    int init_x = 100;
-    int init_y = 100;
-    int init_angle = 270;
-    robots.push_back(Robot(init_x, init_y, init_angle));
 }
 
 void MainWindow::tickUpdate() {
     // qDebug() << "tick";
 
-    update();
+    updateAllRobots();
+    update();  // this calls paintEvent
 
 }
 
 void MainWindow::drawRobot(Robot &rob) {
     QPainter painter(this);
-    painter.drawEllipse(rob.x - ICP_ROBSIZE, rob.y - ICP_ROBSIZE, 2 * ICP_ROBSIZE, 2 * ICP_ROBSIZE);
+
+    /* convert to integer */
+    int xpos = rob.x;
+    int ypos = rob.y;
+
+    painter.drawEllipse(
+        xpos - ICP_ROBSIZE,
+        ypos - ICP_ROBSIZE,
+        2 * ICP_ROBSIZE,
+        2 * ICP_ROBSIZE
+    );
 }

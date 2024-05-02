@@ -3,8 +3,8 @@
 
 class Robot {
 public:
-    unsigned int x;  // x-coordinate
-    unsigned int y;  // y-coordinate
+    double x;  // x-coordinate
+    double y;  // y-coordinate
     unsigned int r;  // angle in degrees
 
     Robot(unsigned int initial_x, unsigned int initial_y, unsigned int initial_r);
