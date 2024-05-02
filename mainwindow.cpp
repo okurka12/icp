@@ -7,6 +7,7 @@
 #include <QString>
 #include <QTimer>
 #include <QtWidgets>
+#include <QKeyEvent>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -32,9 +33,19 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(1000 / ICP_TPS);
 
     /* SPAWN button */
-    QPushButton *button = new QPushButton("spawn", this);
-    button->setGeometry(20, 20, 60, 30);  // x, y, width, height
+    QPushButton *button = new QPushButton("spawn (s)", this);
+    button->setGeometry(20, 20, 80, 35);  // x, y, width, height
     connect(button, &QPushButton::clicked, this, &MainWindow::spawnRobot);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_S) {
+        qDebug() << "S key pressed!";
+        spawnRobot();
+    } else {
+        /* Call base class implementation for other keys */
+        QMainWindow::keyPressEvent(event);
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
