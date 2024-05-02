@@ -85,6 +85,9 @@ void MainWindow::drawRobot(Robot &rob) {
     int xpos = rob.x;
     int ypos = rob.y;
 
+    painter.setBrush(Qt::white);
+    painter.setPen(QPen(Qt::black, 5));
+
     painter.drawEllipse(
         xpos - ICP_ROBSIZE,
         ypos - ICP_ROBSIZE,
