@@ -13,7 +13,7 @@ void Robot::update() {
 
     /* update position based on speed per second and TPS */
     double h = (double)ICP_ROBSPEED / (double)ICP_TPS;  // hypotenuse
-    double rads = ((double)r / 180.0) * ICP_PI;
+    double rads = ICPdeg2rad(r);
     double xd = h * cos(rads);
     double yd = h * sin(rads);
     std::cout << (void *)this <<": xd: " << xd << ", yd: " << yd << ", rads:" << rads << std::endl;

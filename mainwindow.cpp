@@ -1,9 +1,11 @@
+#include <vector>
+#include <cmath>
+
 #include <QDebug>  // use this instead of std::cout
 #include <QPainter>
 #include <QPushButton>
 #include <QString>
 #include <QTimer>
-#include <vector>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -85,13 +87,31 @@ void MainWindow::drawRobot(Robot &rob) {
     int xpos = rob.x;
     int ypos = rob.y;
 
+    /* draw the robot itself */
     painter.setBrush(Qt::white);
     painter.setPen(QPen(Qt::black, 5));
-
     painter.drawEllipse(
         xpos - ICP_ROBSIZE,
         ypos - ICP_ROBSIZE,
         2 * ICP_ROBSIZE,
         2 * ICP_ROBSIZE
     );
+
+    /* draw the robot head */
+    double radians = ICPdeg2rad(rob.r);
+    double headx =
+        rob.x + (double)(ICP_ROBSIZE - ICP_ROBHEAD_SIZE) * cos(radians);
+    double heady =
+        rob.y - (double)(ICP_ROBSIZE - ICP_ROBHEAD_SIZE) * sin(radians);
+    painter.setBrush(Qt::black);
+    painter.setPen(QPen(Qt::black, 1));
+    painter.drawEllipse(
+        headx - ICP_ROBHEAD_SIZE,
+        heady - ICP_ROBHEAD_SIZE,
+        2 * ICP_ROBHEAD_SIZE,
+        2 * ICP_ROBHEAD_SIZE
+    );
+
+
+
 }

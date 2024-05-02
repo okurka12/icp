@@ -8,11 +8,14 @@
 /* ticks per second */
 #define ICP_TPS 70
 
-/* obstacle size in pixels */
+/* obstacle size in px */
 #define ICP_OBSIZE 25
 
-/* radius of a robot in pixels */
+/* radius of a robot in px */
 #define ICP_ROBSIZE 50
+
+/* radius of a robot head in px */
+#define ICP_ROBHEAD_SIZE 10
 
 /* speed of a robot in pixels/s */
 #define ICP_ROBSPEED 200
@@ -28,5 +31,8 @@
 
 /* pi */
 #define ICP_PI 3.14159265359
+
+/* macro to convert degrees to radians (double) */
+#define ICPdeg2rad(rrrad) (((double)(rrrad) / 180.0) * ICP_PI)
 
 #endif // ICP24_H
