@@ -1,4 +1,5 @@
 #include <vector>
+#include "obstacle.h"
 
 #ifndef ROBOT_H
 #define ROBOT_H
@@ -12,10 +13,12 @@ public:
     Robot(double initial_x, double initial_y, double initial_r);
 
     /* one-tick update of a position */
-    void update(std::vector<Robot> &others);
+    void update(std::vector<Robot> &others, std::vector<Obstacle> &obstacles);
     bool collidesWith(Robot &other);
     bool collidesWithWindow();
     bool collidesWithAnyone(std::vector<Robot> &others);
+    bool collidesWithAnyObstacle(std::vector<Obstacle> &obstacles);
+    bool collidesWithObstacle(Obstacle &obs);
 private:
 
     /* rotation direction, 1 or -1 */

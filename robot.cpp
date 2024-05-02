@@ -4,6 +4,7 @@
 #include <random>
 #include "robot.h"
 #include "icp24.h"
+#include "obstacle.h"
 
 static int getRandomNumber(int min, int max) {
     static std::random_device rd;
@@ -25,7 +26,10 @@ void Robot::updateRotDir() {
 }
 
 
-void Robot::update(std::vector<Robot> &others) {
+void Robot::update(
+    std::vector<Robot> &others,
+    std::vector<Obstacle> &obstacles
+) {
 
     double oldx = x;
     double oldy = y;
@@ -43,7 +47,11 @@ void Robot::update(std::vector<Robot> &others) {
     x = newx;
     y = newy;
     /* todo: check collision */
-    if (collidesWithWindow() || collidesWithAnyone(others)) {
+    if (
+        collidesWithWindow() ||
+        collidesWithAnyone(others) ||
+        collidesWithAnyObstacle(obstacles))
+    {
         x = oldx;
         y = oldy;
         r += rotdir * (double)ICP_ROBROT / ICP_TPS;
@@ -53,6 +61,25 @@ void Robot::update(std::vector<Robot> &others) {
         /* note: maybe not as efficient to call this so often? (todo) */
         updateRotDir();
     }
+}
+
+bool Robot::collidesWithAnyObstacle(std::vector<Obstacle> &obstacles) {
+    for (Obstacle &obs : obstacles) {
+        if (collidesWithObstacle(obs)) return true;
+    }
+    return false;
+}
+
+bool Robot::collidesWithObstacle(Obstacle &obs) {
+    double centerx = (double)obs.x * ICP_OBSIZE + (double)ICP_OBSIZE / 2;
+    double centery = (double)obs.y * ICP_OBSIZE + (double)ICP_OBSIZE / 2;
+    double xd = std::max(x, centerx) - std::min(x, centerx);
+    double yd = std::max(y, centery) - std::min(y, centery);
+    double distance = sqrt(xd * xd + yd * yd);
+    if (distance < ICP_ROBSIZE + ICP_OBSIZE * sqrt(2) / 2) {
+        return true;
+    }
+    return false;
 }
 
 bool Robot::collidesWithAnyone(std::vector<Robot> &others) {
