@@ -1,3 +1,14 @@
+/*****************
+**  Vit Pavlik  **
+**   xpavli0a   **
+**    251301    **
+**     2024     **
+*****************/
+
+/**
+ * @file Constants for the simulation
+*/
+
 #ifndef ICP24_H
 #define ICP24_H
 

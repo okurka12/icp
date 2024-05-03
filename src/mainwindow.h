@@ -1,3 +1,15 @@
+/*****************
+**  Vit Pavlik  **
+**   xpavli0a   **
+**    251301    **
+**     2024     **
+*****************/
+
+/**
+ * @file a class for the GUI plus methods for timing and
+ * controlling the simulation
+*/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

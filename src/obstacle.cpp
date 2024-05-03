@@ -1,3 +1,10 @@
+/*****************
+**  Vit Pavlik  **
+**   xpavli0a   **
+**    251301    **
+**     2024     **
+*****************/
+
 #include <iostream>
 #include "obstacle.h"
 

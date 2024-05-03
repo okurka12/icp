@@ -1,3 +1,14 @@
+/*****************
+**  Vit Pavlik  **
+**   xpavli0a   **
+**    251301    **
+**     2024     **
+*****************/
+
+/**
+ * @file Obstacle class representing the obstacles
+*/
+
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 

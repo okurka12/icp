@@ -1,3 +1,14 @@
+/*****************
+**  Vit Pavlik  **
+**   xpavli0a   **
+**    251301    **
+**     2024     **
+*****************/
+
+/**
+ * @file Robot class representing the robot
+*/
+
 #include <vector>
 #include "obstacle.h"
 
