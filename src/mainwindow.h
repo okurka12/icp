@@ -34,7 +34,7 @@ private:
     std::vector<Robot> robots;
     std::vector<Obstacle> obstacles;
     void drawRobot(Robot &rob);
-    void drawGrid(QPaintEvent *event);
+    void drawGrid();
     void drawObstacle(unsigned int x, unsigned int y);
     void drawAllRobots();
     void updateAllRobots();

@@ -17,6 +17,9 @@
 /* radius of a robot head in px */
 #define ICP_ROBHEAD_SIZE 10
 
+/* how thick is a robot outline in px */
+#define ICP_ROBOT_OUTLINE 5
+
 /* speed of a robot in pixels/s */
 #define ICP_ROBSPEED 200
 

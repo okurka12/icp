@@ -210,13 +210,13 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::paintEvent(QPaintEvent *event) {
-    // QMainWindow::paintEvent(event);
-    drawGrid(event);
+    QMainWindow::paintEvent(event);
+    drawGrid();
     drawAllRobots();
     drawAllObstacles();
 }
 
-void MainWindow::drawGrid(QPaintEvent *event)
+void MainWindow::drawGrid()
 {
     QPainter painter(this);
     for (int i = 0; i < width(); i += ICP_OBSIZE) {
@@ -262,11 +262,11 @@ void MainWindow::drawRobot(Robot &rob) {
     int xpos = rob.x;
     int ypos = rob.y;
 
-    int pen_size = rob.isControlled() ? 8 : 5;
+    auto robot_fill_color = rob.isControlled() ? Qt::white : Qt::lightGray;
 
     /* draw the robot itself */
-    painter.setBrush(Qt::white);
-    painter.setPen(QPen(Qt::black, pen_size));
+    painter.setBrush(robot_fill_color);
+    painter.setPen(QPen(Qt::black, ICP_ROBOT_OUTLINE));
     painter.drawEllipse(
         xpos - ICP_ROBSIZE,
         ypos - ICP_ROBSIZE,
