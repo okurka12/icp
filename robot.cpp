@@ -17,36 +17,44 @@ Robot::Robot(double initial_x, double initial_y, double initial_r)
     : x(initial_x), y(initial_y), r(initial_r)
 {
     updateRotDir();
+    is_controlled = false;
+    moving_forward = false;
+    cr_rotdir = 0;
+    rotdir = -1;  // CW
+    flipped = false;
 }
 
 void Robot::updateRotDir() {
 
-    /* every fourth time, the robot decides to rotate to the other side */
+    /**
+     * every fourth time, the robot decides to rotate to the other side
+     * this is beneficial because if the robot decides 50/50 then a large
+     * cluster of robots evens out and they get kind of stuck
+     */
     rotdir = getRandomNumber(1, 4) == 1 ? 1 : -1;
 }
 
-
-void Robot::update(
-    std::vector<Robot> &others,
-    std::vector<Obstacle> &obstacles
-) {
-
-    double oldx = x;
-    double oldy = y;
-
+void Robot::updatePosition() {
     /* update position based on speed per second and TPS */
     double h = (double)ICP_ROBSPEED / (double)ICP_TPS;  // hypotenuse
     double rads = ICPdeg2rad(r);
     double xd = h * cos(rads);
     double yd = h * sin(rads);
+    x += xd;
+    y -= yd;
     // std::cout << (void *)this <<": xd: " << xd << ", yd: " << yd << ", rads:" << rads << std::endl;
-    double newx = x + xd;
-    double newy = y - yd;
+}
+
+
+void Robot::updateAutonomous(
+    std::vector<Robot> &others,
+    std::vector<Obstacle> &obstacles
+) {
+    double oldx = x;
+    double oldy = y;
+    updatePosition();
 
     /* check collision and eventually revert the position update */
-    x = newx;
-    y = newy;
-    /* todo: check collision */
     if (
         collidesWithWindow() ||
         collidesWithAnyone(others) ||
@@ -111,4 +119,58 @@ bool Robot::collidesWithWindow() {
         return true;
     }
     return false;
+}
+
+void Robot::moveForward(bool do_move) {
+    moving_forward = do_move;
+}
+
+void Robot::rotate(int dir) {
+    if (flipped) {
+        cr_rotdir = -dir;
+    } else {
+        cr_rotdir = dir;
+    }
+}
+
+void Robot::updateControlled(
+    std::vector<Robot> &others, std::vector<Obstacle> &obstacles
+) {
+
+    r += cr_rotdir * (double)ICP_ROBROT / ICP_TPS;
+
+    double oldx = x;
+    double oldy = y;
+    if (moving_forward) {
+        updatePosition();
+    } else {
+        return;
+    }
+
+    if (collidesWithAnyObstacle(obstacles) || collidesWithAnyone(others) || collidesWithWindow()) {
+        x = oldx;
+        y = oldy;
+    }
+}
+
+void Robot::update(std::vector<Robot> &others, std::vector<Obstacle> &obstacles) {
+    if (is_controlled) {
+        updateControlled(others, obstacles);
+    } else {
+        updateAutonomous(others, obstacles);
+    }
+}
+
+void Robot::setControlled() {
+    is_controlled = true;
+}
+
+void Robot::flip() {
+    r += 180;
+    flipped = !flipped;
+    cr_rotdir *= -1;
+}
+
+bool Robot::isControlled() {
+    return is_controlled;
 }

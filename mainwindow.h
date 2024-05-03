@@ -23,6 +23,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
     void spawnRobot();
     void tickUpdate();
     ~MainWindow();
@@ -38,7 +39,20 @@ private:
     void drawAllRobots();
     void updateAllRobots();
     void drawAllObstacles();
+    void spawnControlled();
     void toggleSimulation();
+
+    /**
+     * finds the controlled robot in the vector of all robots
+    */
+    void updateCrob();
+
+    void CRUp();
+    void CRDown();
+    void CRLeft();
+    void CRRight();
+    Robot *crob;  // the one robot that is controlled;
+    bool controlled_robot_spawned;
     bool leftButtonPressed;
     bool paused;
 };

@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     std::vector<Obstacle> obstacles = {};
     leftButtonPressed = false;
     paused = false;
+    controlled_robot_spawned = false;
+    crob = new Robot(0, 0, 0);  // blank robot to be deleted
 
 
     setWindowTitle(ICP_TITLE);
@@ -41,9 +43,45 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* PAUSE button */
     QPushButton *pause_button = new QPushButton("pause (p)", this);
-    pause_button->setGeometry(100, 20, 80, 35);  // x, y, width, height
+    pause_button->setGeometry(120, 20, 80, 35);  // x, y, width, height
     connect(pause_button, &QPushButton::clicked, this,
         &MainWindow::toggleSimulation);
+
+    /* SPAWN CONTROLLED button */
+    QPushButton *sc_button = new QPushButton("spawn controlled (c)", this);
+    sc_button->setGeometry(220, 20, 120, 35);  // x, y, width, height
+    connect(sc_button, &QPushButton::clicked, this,
+        &MainWindow::spawnControlled);
+}
+
+void MainWindow::spawnControlled() {
+    if (controlled_robot_spawned) return;  // only spawn one
+
+    Robot crob_local = Robot(
+        ICP_INIT_X,
+        ICP_INIT_Y,
+        ICP_INIT_ANGLE
+    );
+
+    if (crob_local.collidesWithAnyone(robots)) {
+        return;
+    }
+
+    robots.push_back(crob_local);
+    delete crob;
+    // crob = &robots[robots.size() - 1];
+    crob = &robots.back();
+    crob->setControlled();
+
+    controlled_robot_spawned = true;
+}
+
+void MainWindow::updateCrob() {
+    for (Robot &rob : robots) {
+        if (rob.isControlled()) {
+            crob = &rob;
+        }
+    }
 }
 
 void MainWindow::toggleSimulation() {
@@ -59,6 +97,11 @@ void MainWindow::toggleSimulation() {
 
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
+
+    /* without this, control of the controlled robot can be lost and undefined
+    behaviour can occur */
+    updateCrob();
+
     if (event->key() == Qt::Key_S) {
         qDebug() << "S key pressed!";
         spawnRobot();
@@ -71,11 +114,43 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     } else if (event->key() == Qt::Key_W && event->modifiers() & Qt::CTRL) {
         qDebug() << "CTRL + W pressed!";
         close();
+    } else if (event->key() == Qt::Key_C) {
+        qDebug() << "C pressed!";
+        spawnControlled();
+
+    /* stuff for controlling the controlled robot */
+    } else if (event->key() == Qt::Key_I) {
+        crob->moveForward(true);
+    } else if (event->key() == Qt::Key_J) {
+        crob->rotate(1);  // CCW
+    } else if (event->key() == Qt::Key_K) {
+        crob->flip();
+        crob->moveForward(true);
+    } else if (event->key() == Qt::Key_L) {
+        crob->rotate(-1);  // CW
 
     } else {
         /* Call base class implementation for other keys */
         QMainWindow::keyPressEvent(event);
     }
+}
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+
+    updateCrob();
+
+    if (event->key() == Qt::Key_I) {
+        crob->moveForward(false);
+    } else if (event->key() == Qt::Key_J) {
+        crob->rotate(0);
+    } else if (event->key() == Qt::Key_K) {
+        crob->flip();
+        crob->moveForward(false);
+    } else if (event->key() == Qt::Key_L) {
+        crob->rotate(0);
+    } else {
+        QMainWindow::keyPressEvent(event);
+    }
+
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
@@ -187,9 +262,11 @@ void MainWindow::drawRobot(Robot &rob) {
     int xpos = rob.x;
     int ypos = rob.y;
 
+    int pen_size = rob.isControlled() ? 8 : 5;
+
     /* draw the robot itself */
     painter.setBrush(Qt::white);
-    painter.setPen(QPen(Qt::black, 5));
+    painter.setPen(QPen(Qt::black, pen_size));
     painter.drawEllipse(
         xpos - ICP_ROBSIZE,
         ypos - ICP_ROBSIZE,
