@@ -18,6 +18,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "loader.h"
 #include "icp24.h"  // constants
 
 MainWindow::MainWindow(QWidget *parent)
@@ -44,21 +45,44 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* SPAWN button */
     QPushButton *spawn_button = new QPushButton("spawn (s)", this);
-    spawn_button->setGeometry(20, 20, 80, 35);  // x, y, width, height
+    spawn_button->setGeometry(20, 20, 80, 30);  // x, y, width, height
     connect(spawn_button, &QPushButton::clicked, this,
         &MainWindow::spawnRobot);
 
     /* PAUSE button */
     QPushButton *pause_button = new QPushButton("pause (p)", this);
-    pause_button->setGeometry(120, 20, 80, 35);  // x, y, width, height
+    pause_button->setGeometry(120, 20, 80, 30);  // x, y, width, height
     connect(pause_button, &QPushButton::clicked, this,
         &MainWindow::toggleSimulation);
 
     /* SPAWN CONTROLLED button */
     QPushButton *sc_button = new QPushButton("spawn controlled (c)", this);
-    sc_button->setGeometry(220, 20, 120, 35);  // x, y, width, height
+    sc_button->setGeometry(220, 20, 140, 30);  // x, y, width, height
     connect(sc_button, &QPushButton::clicked, this,
         &MainWindow::spawnControlled);
+
+    /* LOAD button */
+    QPushButton *load_button = new QPushButton("load (o)", this);
+    load_button->setGeometry(380, 20, 80, 30);  // x, y, width, height
+    connect(load_button, &QPushButton::clicked, this,
+        &MainWindow::loadObstacles);
+
+    /* SAVE button */
+    QPushButton *save_button = new QPushButton("save (u)", this);
+    save_button->setGeometry(480, 20, 80, 30);  // x, y, width, height
+    connect(save_button, &QPushButton::clicked, this,
+        &MainWindow::saveObstacles);
+}
+
+void MainWindow::loadObstacles() {
+    Loader ldr;
+    obstacles = ldr.load(ICP_LOAD_FILENAME);
+    qDebug() << "loaded from: " ICP_LOAD_FILENAME;
+}
+void MainWindow::saveObstacles() {
+    Loader ldr;
+    ldr.save(ICP_SAVE_FILENAME, obstacles);
+    qDebug() << "saved to: " ICP_SAVE_FILENAME;
 }
 
 void MainWindow::spawnControlled() {
@@ -124,6 +148,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     } else if (event->key() == Qt::Key_C) {
         qDebug() << "C pressed!";
         spawnControlled();
+    } else if (event->key() == Qt::Key_O) {
+        loadObstacles();
+    } else if (event->key() == Qt::Key_U) {
+        saveObstacles();
 
     /* stuff for controlling the controlled robot */
     } else if (event->key() == Qt::Key_I) {

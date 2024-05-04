@@ -10,6 +10,7 @@ CONFIG += exceptions
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/loader.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/obstacle.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     src/icp24.h \
+    src/loader.h \
     src/mainwindow.h \
     src/obstacle.h \
     src/robot.h

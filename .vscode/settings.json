@@ -73,6 +73,7 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "qkeyevent": "cpp"
+        "qkeyevent": "cpp",
+        "fstream": "cpp"
     }
 }

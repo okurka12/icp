@@ -53,6 +53,8 @@ private:
     void drawAllObstacles();
     void spawnControlled();
     void toggleSimulation();
+    void loadObstacles();
+    void saveObstacles();
 
     /**
      * finds the controlled robot in the vector of all robots

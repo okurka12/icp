@@ -52,6 +52,12 @@
 /* margin of collision detection, px */
 #define ICP_MARGIN 2
 
+/* filename to save obstacle positions */
+#define ICP_SAVE_FILENAME "icp_obstacles.txt"
+
+/* filename to load obstacle positions in */
+#define ICP_LOAD_FILENAME "icp_obstacles.txt"
+
 /* macro to convert degrees to radians (double) */
 #define ICPdeg2rad(rrrad) (((double)(rrrad) / 180.0) * ICP_PI)
 
