@@ -5,6 +5,10 @@
 **     2024     **
 *****************/
 
+/**
+ * @file launcher/entry point of the application
+*/
+
 #include "mainwindow.h"
 
 #include <QApplication>

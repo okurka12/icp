@@ -5,6 +5,10 @@
 **     2024     **
 *****************/
 
+/**
+ * @file implementation of class Obstacle
+*/
+
 #include <iostream>
 #include "obstacle.h"
 

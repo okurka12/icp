@@ -5,6 +5,10 @@
 **     2024     **
 *****************/
 
+/**
+ * @file implementation of class loader
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>  // getline

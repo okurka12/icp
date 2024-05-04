@@ -5,6 +5,10 @@
 **     2024     **
 *****************/
 
+/**
+ * @file implementation of class `MainWindow`
+*/
+
 #include <vector>
 #include <cmath>
 
@@ -25,8 +29,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    /* this has been here since beginning,
+    although it's probably not necessary */
     ui->setupUi(this);
 
+    /* initialize attributes */
     std::vector<Robot> robots = {};
     std::vector<Obstacle> obstacles = {};
     leftButtonPressed = false;
@@ -34,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     controlled_robot_spawned = false;
     crob = new Robot(0, 0, 0);  // blank robot to be deleted
 
-
+    /* set window parameters */
     setWindowTitle(ICP_TITLE);
     resize(ICP_WIDTH, ICP_HEIGHT);
 
@@ -95,15 +103,13 @@ void MainWindow::spawnControlled() {
     );
 
     if (crob_local.collidesWithAnyone(robots)) {
-        return;
+        return;  // don't spawn
     }
 
     robots.push_back(crob_local);
     delete crob;
-    // crob = &robots[robots.size() - 1];
     crob = &robots.back();
     crob->setControlled();
-
     controlled_robot_spawned = true;
 }
 

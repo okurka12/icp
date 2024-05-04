@@ -5,6 +5,11 @@
 **     2024     **
 *****************/
 
+/**
+ * @file a class for loading and saving the obstacle positions froma
+ * a file
+*/
+
 #include <vector>
 #include "obstacle.h"
 

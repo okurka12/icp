@@ -30,14 +30,23 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
+    /**
+     * IO events below
+    */
+
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-    void spawnRobot();
+
+    /**
+     * Updates robot positions + redraws the window
+    */
     void tickUpdate();
+
     ~MainWindow();
 
 private:
@@ -51,21 +60,44 @@ private:
     void drawAllRobots();
     void updateAllRobots();
     void drawAllObstacles();
+
+    /**
+     * add controlled robot to the simulation or do nothing if there
+     * already is one
+    */
     void spawnControlled();
+
+    /**
+     * add autonomous robot to the simulation
+    */
+    void spawnRobot();
+
+    /**
+     * pause/unpause the simulation
+    */
     void toggleSimulation();
+
     void loadObstacles();
     void saveObstacles();
 
     /**
      * finds the controlled robot in the vector of all robots
+     * and update attribute `crob`
     */
     void updateCrob();
 
-    void CRUp();
-    void CRDown();
-    void CRLeft();
-    void CRRight();
-    Robot *crob;  // the one robot that is controlled;
+    /**
+     * these methods would be added if there were GUI buttons for
+     * controlling the controlled robot
+    */
+    // void CRUp();
+    // void CRDown();
+    // void CRLeft();
+    // void CRRight();
+
+    /* controlled robot - the one robot that is controlled */
+    Robot *crob;
+
     bool controlled_robot_spawned;
     bool leftButtonPressed;
     bool paused;

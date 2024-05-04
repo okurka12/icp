@@ -5,6 +5,10 @@
 **     2024     **
 *****************/
 
+/**
+ * @file implementation of class Robot
+*/
+
 #include <cmath>  // sin, cos, sqrt
 #include <iostream>
 #include <algorithm>  // min, max
