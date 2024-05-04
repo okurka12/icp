@@ -36,3 +36,7 @@ clean:
 .PHONY: pack
 pack: clean  # notice that zipping is performed only after clean
 	zip -r $(ZIP_FILENAME) *
+
+.PHONY: run
+run: all
+	./$(TARGET_BINARY)
