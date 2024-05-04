@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file Robot class representing the robot
+ * @file
+ * @brief Robot class representing the robot
 */
 
 #include <vector>

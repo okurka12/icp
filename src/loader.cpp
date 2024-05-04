@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file implementation of class loader
+ * @file
+ * @brief implementation of class loader
 */
 
 #include <iostream>

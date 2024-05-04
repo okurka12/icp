@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file a class for the GUI plus methods for timing and
+ * @file
+ * @brief a class for the GUI plus methods for timing and
  * controlling the simulation
 */
 

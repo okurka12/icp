@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file Constants for the simulation
+ * @file
+ * @brief Constants for the simulation
 */
 
 #ifndef ICP24_H

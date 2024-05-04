@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file implementation of class `MainWindow`
+ * @file
+ * @brief implementation of class `MainWindow`
 */
 
 #include <vector>

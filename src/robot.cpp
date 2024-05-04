@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file implementation of class Robot
+ * @file
+ * @brief implementation of class Robot
 */
 
 #include <cmath>  // sin, cos, sqrt

@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file launcher/entry point of the application
+ * @file
+ * @brief launcher/entry point of the application
 */
 
 #include "mainwindow.h"

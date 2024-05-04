@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file Obstacle class representing the obstacles
+ * @file
+ * @brief Obstacle class representing the obstacles
 */
 
 #ifndef OBSTACLE_H

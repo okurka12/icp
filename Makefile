@@ -17,5 +17,5 @@ $(TARGET_BINARY):
 
 .PHONY: clean
 clean:
-	make -f $(GENERATED_MF) clean
-	rm -f *.o $(TARGET_BINARY)
+	if [ -f $(GENERATED_MF) ]; then make -f $(GENERATED_MF) clean; fi
+	rm -rf *.o $(TARGET_BINARY) doc/html doc/latex

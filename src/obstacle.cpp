@@ -6,7 +6,8 @@
 *****************/
 
 /**
- * @file implementation of class Obstacle
+ * @file
+ * @brief implementation of class Obstacle
 */
 
 #include <iostream>
