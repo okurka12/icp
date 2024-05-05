@@ -56,3 +56,8 @@ Go forward          - I
 Go backward         - K
 Rotate to the left  - J
 Rotate to the right - L
+
+# Credits
+
+Doxyfile was generated with `doxygen -g`. Also `main.cpp` was generated
+with Qt Creator.
