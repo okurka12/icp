@@ -34,7 +34,7 @@ doxygen:
 .PHONY: clean
 clean:
 	if [ -f $(GENERATED_MF) ]; then make -f $(GENERATED_MF) clean; fi
-	rm -rf *.o $(TARGET_BINARY) doc/html doc/latex *.zip
+	rm -rf *.o $(TARGET_BINARY) doc/html *.zip
 
 .PHONY: pack
 pack: clean  # notice that zipping is performed only after clean
