@@ -48,6 +48,7 @@ Spawn controlled robot     - C
 Pause/unpause simulation   - P, Esc
 Load obstacles from a file - O
 Save obstacles to a file   - U
+Close application          - Ctrl + W
 
 # Controls for the controlled robot
 
