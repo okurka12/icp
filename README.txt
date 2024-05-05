@@ -57,7 +57,11 @@ Go backward         - K
 Rotate to the left  - J
 Rotate to the right - L
 
+# Conceptual model
+
+Conceptual model can be seen in `doc/concept.pdf`
+
 # Credits
 
-Doxyfile was generated with `doxygen -g`. Also `main.cpp` was generated
-with Qt Creator.
+Doxyfile was generated with `doxygen -g`. Also `main.cpp`, `mainwindow.ui` and
+`icp.pro.user` as well as `icp.pro` was generated with Qt Creator.
