@@ -42,6 +42,9 @@ pack: clean  # notice that zipping is performed only after clean
 
 .PHONY: run
 run: all
-	cp examples/$(OBSTACLES_FILENAME) ./$(OBSTACLES_FILENAME)
-	./$(TARGET_BINARY)
-	rm ./$(OBSTACLES_FILENAME)
+	if [ -f $(OBSTACLES_FILENAME) ]; then \
+		./$ $(TARGET_BINARY); \
+	else \
+		cp examples/$(OBSTACLES_FILENAME) ./$(OBSTACLES_FILENAME); \
+		./$(TARGET_BINARY); \
+	fi
