@@ -25,7 +25,7 @@ doxygen:
 	echo "/**" >> $(DOXY_MAINPAGE)
 	echo "\mainpage" >> $(DOXY_MAINPAGE)
 	echo "\`\`\`md" >> $(DOXY_MAINPAGE)
-	cat doc/README.txt >> $(DOXY_MAINPAGE)
+	cat README.txt >> $(DOXY_MAINPAGE)
 	echo "\`\`\`" >> $(DOXY_MAINPAGE)
 	echo "*/" >> $(DOXY_MAINPAGE)
 	doxygen
