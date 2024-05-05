@@ -6,7 +6,7 @@ Robot simulator with graphical visualisation and controls.
 
 # Dependencies and prerequisites
 
-The application was developed on Windows 11 23H2 using Qt 5.12.2 along with
+The application was developed on Windows 11 23H2 using Qt 5.12.12 along with
 the MinGW toolchain, which was a part of the Qt installation.
 
 The application was partially tested on CentOS 7 Linux using Qt 5.9.7
